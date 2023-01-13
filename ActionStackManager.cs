@@ -287,6 +287,10 @@ public static unsafe class ActionStackManager
     private static void TryDashFromCamera(uint actionType, uint actionID)
     {
         ReAction.actionSheet.TryGetValue(actionID, out var action);
+        
+        if(action==null)
+            return;
+        
         if (action is { IsPvP: true })
         {
             if ( !action.CanTargetSelf
