@@ -10,10 +10,12 @@
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <NoWarn>CA1416</NoWarn>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <OutputPath>E:\Games\FFVIX\Dalamud6.0\XIVLauncher\devPlugins\ReAction\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup>
         <DalamudLibPath>$(AppData)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+<!--        <DalamudLibPath>E:\Games\FFVIX\Dalamud6.0\XIVLauncher\devPlugins\ReAction</DalamudLibPath>-->
     </PropertyGroup>
 
     <ItemGroup>

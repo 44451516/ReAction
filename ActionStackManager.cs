@@ -108,6 +108,10 @@ public static unsafe class ActionStackManager
                 }
             }
 
+            ;
+            ;
+            ;
+
             if (ReAction.Config.EnableAutoTarget && actionType == 1 && TryTabTarget(adjustedActionID, targetObjectID, out var newObjectID))
                 targetObjectID = newObjectID;
 
@@ -282,11 +286,34 @@ public static unsafe class ActionStackManager
 
     private static void TryDashFromCamera(uint actionType, uint actionID)
     {
-        if (!ReAction.actionSheet.TryGetValue(actionID, out var a)
-            || !a.AffectsPosition
-            || !a.CanTargetSelf
-            || a.BehaviourType <= 1
-            || ReAction.Config.EnableNormalBackwardDashes && a.BehaviourType is 3 or 4
+        ReAction.actionSheet.TryGetValue(actionID, out var action);
+        if (action is { IsPvP: true })
+        {
+            if ( !action.CanTargetSelf
+                || action.BehaviourType <= 1
+                || ReAction.Config.EnableNormalBackwardDashes && action.BehaviourType is 3 or 4
+                || Game.actionManager->GetActionStatus((ActionType)actionType, actionID) != 0
+                || Game.AnimationLock != 0)
+                return;
+            if (action.RowId is
+                //回避跳跃
+                29494 
+                //前冲步
+                or 29430
+                //地狱入境
+                or 29550)
+            {
+                Game.SetCharacterRotationToCamera();
+            }
+
+          
+        }
+        
+        
+        if (!action.AffectsPosition
+            || !action.CanTargetSelf
+            || action.BehaviourType <= 1
+            || ReAction.Config.EnableNormalBackwardDashes && action.BehaviourType is 3 or 4
             || Game.actionManager->GetActionStatus((ActionType)actionType, actionID) != 0
             || Game.AnimationLock != 0)
             return;
